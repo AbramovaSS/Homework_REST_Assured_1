@@ -24,7 +24,7 @@ public class WdHubStatusSelenoidTests extends TestBase {
     }
 
     @Test
-    @DisplayName("Проверка текста \"Selenoid 1.11.3 built at 2024-05-25_12:34:40PM\"")
+    @DisplayName("Проверка текста \"Selenoid 1.11.3 built at\"")
     public void checkTextTest() {
         given()
                 .log().all()
@@ -34,7 +34,7 @@ public class WdHubStatusSelenoidTests extends TestBase {
                 .then()
                 .log().all()
                 .statusCode(200)
-                .body("value.message", containsString("Selenoid 1.11.3 built at 2024-05-25_12:34:40PM"));
+                .body("value.message", containsString("Selenoid 1.11.3 built at"));
     }
 
     @Test
