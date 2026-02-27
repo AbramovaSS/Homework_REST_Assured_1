@@ -1,7 +1,7 @@
-# Автотесты с библиотекой REST assured
+# <img src="media/images/rest_assured.png" width="20" height="20"> Автотесты с библиотекой REST assured
 
 Проект содержит автотесты для проверки REST API эндпоинта Selenoid. Тесты разработаны с использованием 
-REST-assured - популярной Java-библиотеки для тестирования REST API.
+REST assured - популярной Java-библиотеки для тестирования REST API
 
 ### Request URL
 ```

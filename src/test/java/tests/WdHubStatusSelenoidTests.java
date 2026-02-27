@@ -1,5 +1,6 @@
 package tests;
 
+import org.hamcrest.Matchers;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -15,8 +16,8 @@ public class WdHubStatusSelenoidTests extends TestBase {
     public void successfulSelenoidAuthorizationTest() {
         given()
                 .log().all()
-                .when()
                 .auth().basic("user1", "1234")
+                .when()
                 .get("/wd/hub/status")
                 .then()
                 .log().all()
@@ -28,8 +29,8 @@ public class WdHubStatusSelenoidTests extends TestBase {
     public void checkTextTest() {
         given()
                 .log().all()
-                .when()
                 .auth().basic("user1", "1234")
+                .when()
                 .get("/wd/hub/status")
                 .then()
                 .log().all()
@@ -42,8 +43,8 @@ public class WdHubStatusSelenoidTests extends TestBase {
     public void checkReadyStatusIsTrueTest() {
         given()
                 .log().all()
-                .when()
                 .auth().basic("user1", "1234")
+                .when()
                 .get("/wd/hub/status")
                 .then()
                 .log().all()
@@ -56,8 +57,8 @@ public class WdHubStatusSelenoidTests extends TestBase {
     public void checkSchemaTest() {
         given()
                 .log().all()
-                .when()
                 .auth().basic("user1", "1234")
+                .when()
                 .get("/wd/hub/status")
                 .then()
                 .log().all()
@@ -67,29 +68,32 @@ public class WdHubStatusSelenoidTests extends TestBase {
 
     @Test
     @DisplayName("Неуспешная авторизация: ввод неверного пароля")
-    public void unsuccessfulSelenoidAuthorizationTest() {
+    public void unsuccessfulSelenoidAuthorization() {
         given()
                 .log().all()
-                .when()
                 .auth().basic("user1", "ertyu")
-                .get("/wd/hub/status")
-                .then()
-                .log().all()
-                .statusCode(401);
-    }
-
-    @Test
-    @DisplayName("Неуспешная авторизация: пустые учетные данные")
-    public void unsuccessfulAuthorizationEmptyCredentialsTest() {
-        given()
-                .log().all()
                 .when()
-                .auth().basic("", "")
                 .get("/wd/hub/status")
                 .then()
                 .log().all()
                 .statusCode(401)
-                .body(containsString("Authorization Required"));
+                .body(containsString("Authorization Required"))
+                .header("WWW-Authenticate", Matchers.containsString("Basic realm="));
+    }
+
+    @Test
+    @DisplayName("Неуспешная авторизация: пустые учетные данные")
+    public void unsuccessfulAuthorizationEmptyCredentials() {
+        given()
+                .log().all()
+                .auth().basic("", "")
+                .when()
+                .get("/wd/hub/status")
+                .then()
+                .log().all()
+                .statusCode(401)
+                .body(containsString("Authorization Required"))
+                .header("WWW-Authenticate", Matchers.containsString("Basic realm="));
     }
 
 }
